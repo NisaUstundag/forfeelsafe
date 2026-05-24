@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>Nisa'nın Bahçesi</title>
+    <style>
+        body { margin: 0; background: #e0f7fa; overflow: hidden; height: 100vh; cursor: crosshair; }
+        #ground { position: fixed; bottom: 0; width: 100%; height: 15px; background: #795548; z-index: 10; }
+        .stem { position: absolute; bottom: 15px; width: 8px; background: #66bb6a; animation: grow 1.5s ease-out forwards; transform-origin: bottom; }
+        .flower-head { position: absolute; top: -40px; left: 50%; transform: translateX(-50%) scale(0); width: 50px; height: 50px; animation: bloom 0.8s 1.2s ease-out forwards; }
+        .petal { position: absolute; width: 40px; height: 40px; border-radius: 50% 0 50% 0; opacity: 0.9; }
+        @keyframes grow { from { height: 0; } to { height: var(--h); } }
+        @keyframes bloom { to { transform: translateX(-50%) scale(2.5); } }
+    </style>
+</head>
+<body onclick="ekle(event)">
+    <div id="ground"></div>
+    <script>
+        const renkler = ['#ff1744', '#f50057', '#d500f9', '#651fff', '#3d5afe', '#00e5ff', '#ffea00', '#ff9100'];
+        function ekle(e) {
+            const boy = Math.random() * 300 + 100;
+            const renk = renkler[Math.floor(Math.random() * renkler.length)];
+            const s = document.createElement('div');
+            s.className = 'stem';
+            s.style.left = e.clientX + 'px';
+            s.style.setProperty('--h', boy + 'px');
+            const h = document.createElement('div');
+            h.className = 'flower-head';
+            for(let i=0; i<6; i++) {
+                const p = document.createElement('div');
+                p.className = 'petal';
+                p.style.backgroundColor = renk;
+                p.style.transform = `rotate(${i * 60}deg) translate(25px)`;
+                h.appendChild(p);
+            }
+            s.appendChild(h);
+            document.body.appendChild(s);
+        }
+    </script>
+</body>
+</html>
